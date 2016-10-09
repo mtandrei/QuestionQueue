@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  {% if questions %}
+  <h1> Results: </h1>
+    <ul>
+    {% for q in questions %}
+    <li>Question: {{ q.question }};  Number of votes:{{ q.votes }} </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

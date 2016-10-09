@@ -61,6 +61,12 @@ img {
     margin: 0 auto 2rem auto;
 }
 
+.question-form{
+    display: inline-block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
 .site-header, .site-footer {
     padding: 20px;
     padding: 2rem;
