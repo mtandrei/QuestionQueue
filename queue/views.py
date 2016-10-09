@@ -8,36 +8,14 @@ TWILIO_NUMBER = "609-917-7253"
 AUTH_TOKEN = "851847dd101f9f1e605ab3643492763d"
 SID="AC64cff1b438f8d1947ab340172e9fb902"
 MAX_QUESTION_LEN = 100
-INSTRUCTIONS = "Text the number of the question that you would like to have answered to ".join(TWILIO_NUMBER)
+INSTRUCTIONS = "Text the question that you would like to have answered to " + TWILIO_NUMBER
 
 client = TwilioRestClient(SID, AUTH_TOKEN)
-@app.route('/', methods=['POST', 'GET'])
+
+@app.route('/', methods=['GET'])
 def index():
     if request.method == 'GET':
-        return render_template('index.html')
-
-    if request.method == 'POST':
-        #TODO Use twilio api
-        # Grab fields from form
-        question = request.form['question']
-        
-        # If blank question, return error
-        if question == "":
-            return render_template('index.html', error="Error: You put in a blank question!")
-
-        # Check length of question and username
-        if len(question) > MAX_QUESTION_LEN:
-            return render_template('index.html',
-                    error="Error: Question exceeds".join(str(MAX_QUESTION_LEN)).join(" characters"))
-
-        # Create and add database record of question
-        question = Question(question=question, votes=1)
-        db.session.add(question)
-        db.session.commit()
-
-        # Return successful POST request to homepage
-        return render_template('index.html', message="Success! Your Question was submitted")
-
+        return render_template('index.html', instructions=INSTRUCTIONS)
 @app.route('/questions', methods=['GET', 'POST'])
 def questions():
     if request.method == 'GET':
@@ -46,10 +24,28 @@ def questions():
 
     if request.method == 'POST':
         q_id = -1
+        #Try/Catch that handles if int or string
         try:
             q_id = int(client.messages.list()[0].body) #gets most recent
         except ValueError:
+            question = client.messages.list()[0].body
+            
+            # If blank question, return error
+            if question == "":
+                return render_template('index.html', error="Error: You put in a blank question!")
+
+            # Check length of question
+            if len(question) > MAX_QUESTION_LEN:
+                return render_template('index.html',
+                        error="Error: Question exceeds".join(str(MAX_QUESTION_LEN)).join(" characters"))
+
+            # Create and add database record of question
+            question = Question(question=question, votes=1)
+            db.session.add(question)
+            db.session.commit()
+
             return render_template('questions.html')
+
         if q_id == -1:
             return render_template('questions.html')
         
@@ -58,6 +54,7 @@ def questions():
             q.votes+=1
             db.session.commit()
         return render_template('questions.html')
+        
 
 
 @app.route('/results', methods=['GET'])

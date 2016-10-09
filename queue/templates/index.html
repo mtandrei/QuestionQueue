@@ -9,16 +9,16 @@
   <p class="error">{{ error }}</p>
 {% endif %}
 
-<div class="question-form">
-  <form method="post" name="message" action="/">
-      <label for="username">Username</label>
-      <input type="text" placeholder="Enter your username here" name="username" id="username">
 
-      <label for="message">Question</label>
-      <input type="text" placeholder="Enter your question here" name="question" id="question" maxlength="100">
+{% if instructions %}
+  <div class="content">
+    <h1>{{ instructions }} </h1>
+    <br>
+    <br>
+  </div>
+{% endif %}
 
-      <input class="button-primary" type="submit" value="Submit">
-  </form>
+<div class="site-footer">
+  <p>Made by Mihai Andrei</p>
 </div>
-
 {% endblock %}
