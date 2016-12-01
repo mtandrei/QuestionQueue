@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+
 {% if error %}
   <p class="error">{{ error }}</p>
 {% endif %}
@@ -15,10 +16,11 @@
     <h1>{{ instructions }} </h1>
     <br>
     <br>
+    <form action = "{{ url_for('questions') }}" name="questions" method="GET">
+      <button type="submit" class="button">Questions</button>
+    </form>
   </div>
+  
 {% endif %}
 
-<div class="site-footer">
-  <p>Made by Mihai Andrei</p>
-</div>
 {% endblock %}

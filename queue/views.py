@@ -59,7 +59,15 @@ def questions():
 
 @app.route('/results', methods=['GET'])
 def results():
-    if(request.method == 'GET'):
+    if request.method == 'GET':
         questions = Question.query.order_by(desc(Question.votes)).limit(10).all()
         return render_template('results.html', questions=questions)
-    return render_template('results.html')
+    return render_template('index.html', error="ERROR: Bad request!")
+
+@app.route('/clear', methods=['POST'])
+def clear():
+    if request.method == 'POST':
+        db.session.query(Question).delete()
+        db.session.commit()
+        return render_template('index.html', delete="Questions deleted succesfully!")
+    return render_template('index.html', error="ERROR: Bad request!")

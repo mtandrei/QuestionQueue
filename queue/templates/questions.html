@@ -11,7 +11,13 @@
   {% for q in question_list %}
   <li> User {{q.username }} asked "{{q.question}}" Question ID: {{q.id}} </li> 
   {% endfor %}
-</ul>
+  </ul>
+{% else %}
+  <h3> None as of yet! </h3>
 {% endif %}
+<form action = "{{ url_for('results') }}" name="results" method="GET">
+    <button type="submit" class="button"> Results </button>
+  </form>
+
 
 {% endblock %}
