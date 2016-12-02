@@ -29,3 +29,5 @@ Quit out of mysql with "quit". Then run:
 To check the database subsequently, run "mysql -uqueue -pqueue"
 To change database structure, edit queue/models.py, then run migrate and upgrade again.
 If you happen to remove the migrations folder, then run init, migrate, then upgrade.
+
+NOTE: To run this app in full, you need to set up an account with Twilio
