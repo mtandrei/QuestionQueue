@@ -9,7 +9,7 @@
 <h3> To vote, text 609 917 7253 with the id of the question you want answered </h3>
 <ul class ="questions">
   {% for q in question_list %}
-  <li> User {{q.username }} asked "{{q.question}}" Question ID: {{q.id}} </li> 
+  <li>"{{q.question}}" Question ID: {{q.id}} </li> 
   {% endfor %}
   </ul>
 {% else %}
